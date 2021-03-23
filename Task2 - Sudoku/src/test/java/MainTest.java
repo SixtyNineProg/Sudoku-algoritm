@@ -109,9 +109,9 @@ public class MainTest {
     @Test
     public void testCount() {
         boolean difference = false;
-        Main.count(listTable1Test);
+        ArrayList<Integer>[][] actualList = (ArrayList<Integer>[][]) Main.convertChar2ArrayToList2Array(mas1Test);
         ArrayList<Integer>[][] expectedList = (ArrayList<Integer>[][]) Main.convertChar2ArrayToList2Array(mas2Test);
-        ArrayList<Integer>[][] actualList = listTable1Test;
+        Main.count(actualList);
         for (int i = 0; i < actualList.length; i++) {
             for (int j = 0; j < actualList[i].length; j++) {
                 ArrayList<Integer> tmp1 = actualList[i][j];
