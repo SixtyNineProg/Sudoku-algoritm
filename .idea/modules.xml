@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Task1 - Container with water/Task1 - Container with water.iml" filepath="$PROJECT_DIR$/Task1 - Container with water/Task1 - Container with water.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task2 - Sudoku/Task2 - Sudoku.iml" filepath="$PROJECT_DIR$/Task2 - Sudoku/Task2 - Sudoku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task3 - Happy number/Task3 - Happy number.iml" filepath="$PROJECT_DIR$/Task3 - Happy number/Task3 - Happy number.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task4 - Integer to roman/Task4 - Integer to roman.iml" filepath="$PROJECT_DIR$/Task4 - Integer to roman/Task4 - Integer to roman.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tasks.iml" filepath="$PROJECT_DIR$/Tasks.iml" />
+    </modules>
+  </component>
+</project>
