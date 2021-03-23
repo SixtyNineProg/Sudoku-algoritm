@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +37,7 @@ public class Main {
                 {'.', '.', '8', '.', '.', '.', '.', '3', '5'},
                 {'.', '.', '3', '.', '.', '.', '.', '.', '.'},
         };
+
         print2Mas(mas4);
         List<Integer>[][] listTable = convertChar2ArrayToList2Array(mas4);
         count(listTable);
