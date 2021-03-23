@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -36,31 +38,43 @@ public class Main {
                 {'.', '.', '8', '.', '.', '.', '.', '3', '5'},
                 {'.', '.', '3', '.', '.', '.', '.', '.', '.'},
         };
-        print2Mas(mas2);
-        List<Integer>[][] listTable = count(mas2);
-        System.out.println(checkSolution(listTable));
+        print2Mas(mas4);
+        List<Integer>[][] listTable = convertChar2ArrayToList2Array(mas4);
+        count(listTable);
+        if (checkSolution(listTable)) return;
+
+        int[] minLen = findMinLenNums(listTable);
+        printMas(minLen);
+
+        List<Integer> tmpList = listTable[minLen[1]][minLen[2]];
+        for (Integer num: tmpList) {
+            ArrayList<Integer> oneSizeList = new ArrayList<>(Collections.singletonList(num));
+            listTable[minLen[1]][minLen[2]] = oneSizeList;
+            count(listTable);
+
+        }
     }
 
-    public static List<Integer>[][] count(char[][] table) {
-        List<Integer>[][] listTable = convertChar2ArrayToList2Array(table);
-        printList2Mas(listTable);
-
+    //minLen: 0 - length, 1 - i, 2 - j
+    private static int[] findMinLenNums(List<Integer>[][] listTable) {
+        int[] minLen = {10, 0, 0};
         for (int i = 0; i < listTable.length; i++) {
             for (int j = 0; j < listTable[i].length; j++) {
-
-                if (listTable[i][j].size() == 1) {
-                    if (listTable[i][j].get(0) == 0) {
-                        ArrayList<Integer> nums = new ArrayList<>(
-                                List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)
-                        );
-                        checkNearSquare(i, j, listTable, nums);
-                        if (nums.size() != 1) checkColumn(j, listTable, nums);
-                        if (nums.size() != 1) checkLine(i, listTable, nums);
-                        listTable[i][j] = nums;
-                    }
+                int tmpLen = listTable[i][j].size();
+                if (minLen[0] > tmpLen && tmpLen > 1) {
+                    minLen[0] = tmpLen;
+                    minLen[1] = i;
+                    minLen[2] = j;
                 }
             }
         }
+        return minLen;
+    }
+
+    public static void count(List<Integer>[][] listTable) {
+        printList2Mas(listTable);
+        startCount(listTable);
+
         printList2Mas(listTable);
 
         boolean difference;
@@ -89,7 +103,25 @@ public class Main {
                 }
             }
         }
-        return listTable;
+    }
+
+    private static void startCount(List<Integer>[][] listTable) {
+        for (int i = 0; i < listTable.length; i++) {
+            for (int j = 0; j < listTable[i].length; j++) {
+
+                if (listTable[i][j].size() == 1) {
+                    if (listTable[i][j].get(0) == 0) {
+                        ArrayList<Integer> nums = new ArrayList<>(
+                                List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)
+                        );
+                        checkNearSquare(i, j, listTable, nums);
+                        if (nums.size() != 1) checkColumn(j, listTable, nums);
+                        if (nums.size() != 1) checkLine(i, listTable, nums);
+                        listTable[i][j] = nums;
+                    }
+                }
+            }
+        }
     }
 
     public static void print2Mas(char[][] mas) {
@@ -98,6 +130,13 @@ public class Main {
                 System.out.print(c + "\t");
             }
             System.out.println();
+        }
+        System.out.println();
+    }
+
+    public static void printMas(int[] mas) {
+        for (int c : mas) {
+            System.out.print(c + "\t");
         }
         System.out.println();
     }
