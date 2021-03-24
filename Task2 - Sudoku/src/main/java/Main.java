@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        char[][] mas4 = {
+        char[][] masEasy = {
                 {'1', '5', '.', '.', '4', '2', '.', '.', '6'},
                 {'2', '7', '4', '5', '6', '.', '.', '1', '.'},
                 {'.', '.', '6', '.', '.', '7', '4', '.', '2'},
@@ -15,7 +15,7 @@ public class Main {
                 {'9', '8', '5', '.', '3', '.', '.', '6', '.'},
                 {'.', '4', '.', '2', '1', '9', '8', '3', '.'},
         };
-        char[][] mas1 = {
+        char[][] masHard = {
                 {'.', '.', '.', '5', '.', '6', '.', '.', '.'},
                 {'.', '.', '.', '.', '.', '.', '.', '6', '2'},
                 {'7', '.', '4', '.', '1', '.', '.', '.', '.'},
@@ -26,7 +26,7 @@ public class Main {
                 {'3', '.', '.', '.', '.', '8', '7', '.', '.'},
                 {'.', '5', '.', '3', '.', '4', '.', '.', '1'},
         };
-        char[][] mas2 = {
+        char[][] masMedium = {
                 {'8', '6', '.', '.', '.', '.', '7', '.', '.'},
                 {'.', '.', '.', '2', '7', '.', '6', '9', '.'},
                 {'7', '.', '2', '6', '.', '4', '.', '.', '.'},
@@ -38,21 +38,52 @@ public class Main {
                 {'.', '.', '3', '.', '.', '.', '.', '.', '.'},
         };
 
-        print2Mas(mas4);
-        List<Integer>[][] listTable = convertChar2ArrayToList2Array(mas4);
+        print2Mas(masMedium);
+        List<Integer>[][] listTable = convertChar2ArrayToList2Array(masMedium);
         count(listTable);
+        List<Integer>[][] listTableClone = cloneStructure(listTable);
+        ArrayList<Integer> oneSizeList = new ArrayList<>(Collections.singletonList(55));
+        listTableClone[0][0] = oneSizeList;
+        printList2Mas(listTable);
+        printList2Mas(listTableClone);
         if (checkSolution(listTable)) return;
+        countNext(listTable);
+        printList2Mas(listTable);
+    }
 
+    private static void countNext(List<Integer>[][] listTable) {
         int[] minLen = findMinLenNums(listTable);
-        printMas(minLen);
-
-        List<Integer> tmpList = listTable[minLen[1]][minLen[2]];
-        for (Integer num: tmpList) {
+        int x = minLen[1];
+        int y = minLen[2];
+        List<Integer> tmpList = listTable[x][y];
+        for (Integer num : tmpList) {
             ArrayList<Integer> oneSizeList = new ArrayList<>(Collections.singletonList(num));
             listTable[minLen[1]][minLen[2]] = oneSizeList;
             count(listTable);
-
+            if (isExistMoreThanOne(listTable)) {
+                List<Integer>[][] listTableClone = cloneStructure(listTable);
+                countNext(listTableClone);
+            } else if (!checkSolution(listTable))
+                return;
         }
+    }
+
+    private static List<Integer>[][] cloneStructure(List<Integer>[][] listTable) {
+        List<Integer>[][] listTabClone = new ArrayList[listTable.length][listTable[0].length];
+        for (int i = 0; i < listTable.length; i++) {
+            for (int j = 0; j < listTable[i].length; j++) {
+                ArrayList<Integer> tmpList = (ArrayList<Integer>) listTable[i][j];
+                listTabClone[i][j] = (List<Integer>) tmpList.clone();
+            }
+        }
+        return listTabClone;
+    }
+
+    private static boolean isExistMoreThanOne(List<Integer>[][] listTable) {
+        for (List<Integer>[] lists : listTable)
+            for (List<Integer> list : lists)
+                if (list.size() > 1) return true;
+        return false;
     }
 
     //minLen: 0 - length, 1 - i, 2 - j
@@ -74,7 +105,6 @@ public class Main {
     public static void count(List<Integer>[][] listTable) {
         printList2Mas(listTable);
         startCount(listTable);
-
         printList2Mas(listTable);
 
         boolean difference;
@@ -124,6 +154,7 @@ public class Main {
         }
     }
 
+
     public static void print2Mas(char[][] mas) {
         for (char[] ma : mas) {
             for (char c : ma) {
@@ -155,6 +186,7 @@ public class Main {
         System.out.println();
     }
 
+
     public static List<Integer>[][] convertChar2ArrayToList2Array(char[][] table) {
         ArrayList<Integer>[][] listTab = new ArrayList[table.length][table[0].length];
         for (int i = 0; i < table.length; i++) {
@@ -172,6 +204,7 @@ public class Main {
         }
         return listTab;
     }
+
 
     public static void checkNearSquare(int line, int column, List<Integer>[][] listTable, ArrayList<Integer> list) {
         if (line <= 2) {
@@ -251,6 +284,7 @@ public class Main {
             } else return;
         }
     }
+
 
     public static boolean checkSolution(List<Integer>[][] lists) {
         int sizeBlock = 3;
@@ -348,5 +382,109 @@ public class Main {
                 } else return;
             }
         }
+    }
+
+    public static boolean checkSquareAndColumnAndLine(int line, int column, List<Integer>[][] lists) {
+        int startI = -1;
+        int endI = -1;
+        int startJ = -1;
+        int endJ = -1;
+
+        if (line <= 2) {
+            startI = 0;
+            endI = 2;
+            if (column <= 2) {
+                startJ = 0;
+                endJ = 2;
+            }
+            if (column >= 3 && column <= 5) {
+                startJ = 3;
+                endJ = 5;
+            }
+            if (column >= 6 && column <= 8) {
+                startJ = 6;
+                endJ = 8;
+            }
+        }
+        if (line >= 3 && line <= 5) {
+            startI = 3;
+            endI = 5;
+            if (column <= 2) {
+                startJ = 0;
+                endJ = 2;
+            }
+            if (column >= 3 && column <= 5) {
+                startJ = 3;
+                endJ = 5;
+            }
+            if (column >= 6 && column <= 8) {
+                startJ = 6;
+                endJ = 8;
+            }
+        }
+        if (line >= 6 && line <= 8) {
+            startI = 6;
+            endI = 8;
+            if (column <= 2) {
+                startJ = 0;
+                endJ = 2;
+            }
+            if (column >= 3 && column <= 5) {
+                startJ = 3;
+                endJ = 5;
+            }
+            if (column >= 6 && column <= 8) {
+                startJ = 6;
+                endJ = 8;
+            }
+        }
+
+        if (!checkSquare(startI, endI, startJ, endJ, lists)) return false;
+        if (!checkColumn(column, lists)) return false;
+        return checkLine(line, lists);
+    }
+
+    public static boolean checkSquare(int startI, int endI, int startJ, int endJ, List<Integer>[][] listTable) {
+        ArrayList<Integer> actualList = new ArrayList<>();
+        for (int i = startI; i <= endI; i++) {
+            for (int j = startJ; j <= endJ; j++) {
+                if (listTable[i][j].size() == 0) return false;
+                if (listTable[i][j].size() == 1) {
+                    Integer tmpNum = listTable[i][j].get(0);
+                    if (actualList.indexOf(tmpNum) == -1) {
+                        actualList.add(tmpNum);
+                    } else return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkColumn(int column, List<Integer>[][] listTable) {
+        ArrayList<Integer> actualList = new ArrayList<>();
+        for (List<Integer>[] lists : listTable) {
+            if (lists[column].size() == 0) return false;
+            if (lists[column].size() == 1) {
+                Integer tmpNum = lists[column].get(0);
+                if (actualList.indexOf(tmpNum) == -1) {
+                    actualList.add(tmpNum);
+                } else return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkLine(int line, List<Integer>[][] listTable) {
+        ArrayList<Integer> actualList = new ArrayList<>();
+        for (int i = 0; i < listTable[line].length; i++) {
+            if (listTable[line][i].size() == 0) return false;
+            if (listTable[line][i].size() == 1) {
+                Integer tmpNum = listTable[line][i].get(0);
+                if (actualList.indexOf(tmpNum) == -1) {
+                    actualList.add(tmpNum);
+                } else return false;
+            }
+        }
+        return true;
     }
 }
