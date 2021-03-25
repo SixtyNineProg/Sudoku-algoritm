@@ -3,7 +3,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class Main {
+    private static List<Integer>[][] solution;
+    private static boolean isSolutionFind = false;
     public static void main(String[] args) {
+        char[][] masCreate = {
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+        };
         char[][] masEasy = {
                 {'1', '5', '.', '.', '4', '2', '.', '.', '6'},
                 {'2', '7', '4', '5', '6', '.', '.', '1', '.'},
@@ -38,33 +51,51 @@ public class Main {
                 {'.', '.', '3', '.', '.', '.', '.', '.', '.'},
         };
 
-        print2Mas(masMedium);
-        List<Integer>[][] listTable = convertChar2ArrayToList2Array(masMedium);
+        char[][] masMegaHard1 = {
+                {'.', '.', '.', '.', '.', '9', '.', '7', '.'},
+                {'7', '.', '6', '.', '.', '1', '.', '.', '.'},
+                {'.', '.', '.', '4', '.', '.', '5', '.', '.'},
+                {'.', '.', '.', '.', '.', '6', '2', '.', '.'},
+                {'6', '.', '7', '.', '.', '.', '.', '.', '4'},
+                {'5', '.', '.', '.', '2', '.', '.', '.', '3'},
+                {'.', '4', '.', '3', '5', '.', '1', '.', '.'},
+                {'.', '.', '9', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '8', '.', '.'},
+        };
+
+        print2Mas(masMegaHard1);
+        List<Integer>[][] listTable = convertChar2ArrayToList2Array(masMegaHard1);
         count(listTable);
-        List<Integer>[][] listTableClone = cloneStructure(listTable);
-        ArrayList<Integer> oneSizeList = new ArrayList<>(Collections.singletonList(55));
-        listTableClone[0][0] = oneSizeList;
-        printList2Mas(listTable);
-        printList2Mas(listTableClone);
         if (checkSolution(listTable)) return;
         countNext(listTable);
-        printList2Mas(listTable);
+        printList2MasSolution(solution);
     }
+
 
     private static void countNext(List<Integer>[][] listTable) {
         int[] minLen = findMinLenNums(listTable);
         int x = minLen[1];
         int y = minLen[2];
         List<Integer> tmpList = listTable[x][y];
+        List<Integer>[][] tempListTable = cloneStructure(listTable);
         for (Integer num : tmpList) {
+            if (isSolutionFind) return;
+            listTable = cloneStructure(tempListTable); //return step
+
             ArrayList<Integer> oneSizeList = new ArrayList<>(Collections.singletonList(num));
             listTable[minLen[1]][minLen[2]] = oneSizeList;
             count(listTable);
+
+            if (!checkAll(listTable))
+                continue;
+
             if (isExistMoreThanOne(listTable)) {
                 List<Integer>[][] listTableClone = cloneStructure(listTable);
                 countNext(listTableClone);
-            } else if (!checkSolution(listTable))
-                return;
+            } else if (checkSolution(listTable)) {
+                solution = listTable;
+                isSolutionFind = true;
+            }
         }
     }
 
@@ -103,10 +134,7 @@ public class Main {
     }
 
     public static void count(List<Integer>[][] listTable) {
-        printList2Mas(listTable);
         startCount(listTable);
-        printList2Mas(listTable);
-
         boolean difference;
         startWork:
         while (true) {
@@ -125,7 +153,6 @@ public class Main {
                 }
             }
             if (!difference) break;
-            printList2Mas(listTable);
 
             for (List<Integer>[] lists : listTable) {
                 for (List<Integer> list : lists) {
@@ -180,6 +207,20 @@ public class Main {
                     stringBuilder.append(num);
                 }
                 System.out.format("%15s", stringBuilder);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    public static void printList2MasSolution(List<Integer>[][] listTable) {
+        for (List<Integer>[] lists : listTable) {
+            for (List<Integer> list : lists) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (Integer num : list) {
+                    stringBuilder.append(num);
+                }
+                System.out.print(stringBuilder + "\t");
             }
             System.out.println();
         }
@@ -384,7 +425,27 @@ public class Main {
         }
     }
 
-    public static boolean checkSquareAndColumnAndLine(int line, int column, List<Integer>[][] lists) {
+    public static boolean checkAll(List<Integer>[][] lists) {
+        for (int i = 0; i < lists.length; i++) {
+            if (!checkLine(i, lists))
+                return false;
+        }
+
+        for (int i = 0; i < lists[0].length; i++) {
+            if (!checkColumn(i, lists))
+                return false;
+        }
+
+        for (int i = 0; i < lists.length; i++) {
+            for (int j = 0; j < lists[i].length; j++) {
+                if (!checkSquare(i, j, lists))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkSquare(int line, int column, List<Integer>[][] listTable) {
         int startI = -1;
         int endI = -1;
         int startJ = -1;
@@ -439,12 +500,6 @@ public class Main {
             }
         }
 
-        if (!checkSquare(startI, endI, startJ, endJ, lists)) return false;
-        if (!checkColumn(column, lists)) return false;
-        return checkLine(line, lists);
-    }
-
-    public static boolean checkSquare(int startI, int endI, int startJ, int endJ, List<Integer>[][] listTable) {
         ArrayList<Integer> actualList = new ArrayList<>();
         for (int i = startI; i <= endI; i++) {
             for (int j = startJ; j <= endJ; j++) {

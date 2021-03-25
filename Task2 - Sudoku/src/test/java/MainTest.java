@@ -143,14 +143,14 @@ public class MainTest {
     @Test
     public void whenCorrectDataForCheckSquareThenReturnTrue() {
         List<Integer>[][] actualList = Main.convertChar2ArrayToList2Array(correctTable);
-        boolean result = Main.checkSquare(0, 2, 0, 2, actualList);
+        boolean result = Main.checkSquare(0, 0, actualList);
         Assert.assertTrue(result);
     }
 
     @Test
     public void whenIncorrectDataForCheckSquareThenReturnFalse() {
         List<Integer>[][] actualList = Main.convertChar2ArrayToList2Array(incorrectTable1);
-        boolean result = Main.checkSquare(0, 2, 0, 2, actualList);
+        boolean result = Main.checkSquare(0, 0, actualList);
         Assert.assertFalse(result);
     }
 
@@ -179,6 +179,20 @@ public class MainTest {
     public void whenIncorrectDataForCheckLineThenReturnFalse() {
         List<Integer>[][] actualList = Main.convertChar2ArrayToList2Array(incorrectTable1);
         boolean result = Main.checkLine(0,  actualList);
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void whenCorrectDataForCheckAllThenReturnTrue() {
+        List<Integer>[][] actualList = Main.convertChar2ArrayToList2Array(correctTable);
+        boolean result = Main.checkAll(actualList);
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void whenIncorrectDataForCheckAllThenReturnFalse() {
+        List<Integer>[][] actualList = Main.convertChar2ArrayToList2Array(incorrectTable1);
+        boolean result = Main.checkAll(actualList);
         Assert.assertFalse(result);
     }
 }
