@@ -5,6 +5,7 @@ import java.util.List;
 public class Main {
     private static List<Integer>[][] solution;
     private static boolean isSolutionFind = false;
+
     public static void main(String[] args) {
         char[][] masCreate = {
                 {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
@@ -16,39 +17,6 @@ public class Main {
                 {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
                 {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
                 {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
-        };
-        char[][] masEasy = {
-                {'1', '5', '.', '.', '4', '2', '.', '.', '6'},
-                {'2', '7', '4', '5', '6', '.', '.', '1', '.'},
-                {'.', '.', '6', '.', '.', '7', '4', '.', '2'},
-                {'.', '1', '.', '.', '.', '.', '.', '4', '.'},
-                {'.', '.', '.', '.', '5', '.', '.', '.', '.'},
-                {'.', '6', '.', '4', '.', '3', '1', '9', '.'},
-                {'.', '2', '.', '6', '.', '5', '9', '.', '.'},
-                {'9', '8', '5', '.', '3', '.', '.', '6', '.'},
-                {'.', '4', '.', '2', '1', '9', '8', '3', '.'},
-        };
-        char[][] masHard = {
-                {'.', '.', '.', '5', '.', '6', '.', '.', '.'},
-                {'.', '.', '.', '.', '.', '.', '.', '6', '2'},
-                {'7', '.', '4', '.', '1', '.', '.', '.', '.'},
-                {'9', '.', '.', '.', '4', '3', '.', '.', '7'},
-                {'.', '2', '.', '.', '.', '.', '.', '.', '.'},
-                {'.', '8', '.', '.', '9', '.', '.', '5', '.'},
-                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'3', '.', '.', '.', '.', '8', '7', '.', '.'},
-                {'.', '5', '.', '3', '.', '4', '.', '.', '1'},
-        };
-        char[][] masMedium = {
-                {'8', '6', '.', '.', '.', '.', '7', '.', '.'},
-                {'.', '.', '.', '2', '7', '.', '6', '9', '.'},
-                {'7', '.', '2', '6', '.', '4', '.', '.', '.'},
-                {'3', '.', '.', '7', '.', '9', '.', '8', '.'},
-                {'.', '7', '6', '.', '1', '3', '5', '.', '.'},
-                {'.', '.', '.', '4', '.', '.', '3', '.', '.'},
-                {'9', '2', '7', '3', '8', '5', '.', '.', '.'},
-                {'.', '.', '8', '.', '.', '.', '.', '3', '5'},
-                {'.', '.', '3', '.', '.', '.', '.', '.', '.'},
         };
 
         char[][] masMegaHard1 = {
@@ -63,8 +31,12 @@ public class Main {
                 {'.', '.', '.', '.', '.', '.', '8', '.', '.'},
         };
 
-        print2Mas(masMegaHard1);
-        List<Integer>[][] listTable = convertChar2ArrayToList2Array(masMegaHard1);
+        setSolution(masMegaHard1);
+    }
+
+    public static void setSolution(char[][] mas) {
+        print2Mas(mas);
+        List<Integer>[][] listTable = convertChar2ArrayToList2Array(mas);
         count(listTable);
         if (checkSolution(listTable)) return;
         countNext(listTable);
@@ -74,8 +46,8 @@ public class Main {
 
     private static void countNext(List<Integer>[][] listTable) {
         int[] minLen = findMinLenNums(listTable);
-        int x = minLen[1];
-        int y = minLen[2];
+        int x = minLen[0];
+        int y = minLen[1];
         List<Integer> tmpList = listTable[x][y];
         List<Integer>[][] tempListTable = cloneStructure(listTable);
         for (Integer num : tmpList) {
@@ -83,7 +55,7 @@ public class Main {
             listTable = cloneStructure(tempListTable); //return step
 
             ArrayList<Integer> oneSizeList = new ArrayList<>(Collections.singletonList(num));
-            listTable[minLen[1]][minLen[2]] = oneSizeList;
+            listTable[minLen[0]][minLen[1]] = oneSizeList;
             count(listTable);
 
             if (!checkAll(listTable))
@@ -117,16 +89,16 @@ public class Main {
         return false;
     }
 
-    //minLen: 0 - length, 1 - i, 2 - j
     private static int[] findMinLenNums(List<Integer>[][] listTable) {
-        int[] minLen = {10, 0, 0};
+        int[] minLen = {0, 0};
+        int minLength = 10;
         for (int i = 0; i < listTable.length; i++) {
             for (int j = 0; j < listTable[i].length; j++) {
                 int tmpLen = listTable[i][j].size();
-                if (minLen[0] > tmpLen && tmpLen > 1) {
-                    minLen[0] = tmpLen;
-                    minLen[1] = i;
-                    minLen[2] = j;
+                if (minLength > tmpLen && tmpLen > 1) {
+                    minLength = tmpLen;
+                    minLen[0] = i;
+                    minLen[1] = j;
                 }
             }
         }
@@ -541,5 +513,9 @@ public class Main {
             }
         }
         return true;
+    }
+
+    public static List<Integer>[][] getSolution() {
+        return solution;
     }
 }
