@@ -43,6 +43,34 @@ public class Main {
         printList2MasSolution(solution);
     }
 
+    public static void count(List<Integer>[][] listTable) {
+        startCount(listTable);
+        boolean difference;
+        startWork:
+        while (true) {
+            difference = false;
+            for (int i = 0; i < listTable.length; i++) {
+                for (int j = 0; j < listTable[i].length; j++) {
+                    int tempSize = listTable[i][j].size();
+                    if (tempSize != 1) {
+                        ArrayList<Integer> nums = (ArrayList<Integer>) listTable[i][j];
+                        checkNearSquare(i, j, listTable, nums);
+                        if (nums.size() != 1) checkColumn(j, listTable, nums);
+                        if (nums.size() != 1) checkLine(i, listTable, nums);
+                        listTable[i][j] = nums;
+                        if (tempSize != nums.size()) difference = true;
+                    }
+                }
+            }
+            if (!difference) break;
+
+            for (List<Integer>[] lists : listTable) {
+                for (List<Integer> list : lists) {
+                    if (list.size() != 1) continue startWork;
+                }
+            }
+        }
+    }
 
     private static void countNext(List<Integer>[][] listTable) {
         int[] minLen = findMinLenNums(listTable);
@@ -70,6 +98,7 @@ public class Main {
             }
         }
     }
+
 
     private static List<Integer>[][] cloneStructure(List<Integer>[][] listTable) {
         List<Integer>[][] listTabClone = new ArrayList[listTable.length][listTable[0].length];
@@ -105,34 +134,7 @@ public class Main {
         return minLen;
     }
 
-    public static void count(List<Integer>[][] listTable) {
-        startCount(listTable);
-        boolean difference;
-        startWork:
-        while (true) {
-            difference = false;
-            for (int i = 0; i < listTable.length; i++) {
-                for (int j = 0; j < listTable[i].length; j++) {
-                    int tempSize = listTable[i][j].size();
-                    if (tempSize != 1) {
-                        ArrayList<Integer> nums = (ArrayList<Integer>) listTable[i][j];
-                        checkNearSquare(i, j, listTable, nums);
-                        if (nums.size() != 1) checkColumn(j, listTable, nums);
-                        if (nums.size() != 1) checkLine(i, listTable, nums);
-                        listTable[i][j] = nums;
-                        if (tempSize != nums.size()) difference = true;
-                    }
-                }
-            }
-            if (!difference) break;
 
-            for (List<Integer>[] lists : listTable) {
-                for (List<Integer> list : lists) {
-                    if (list.size() != 1) continue startWork;
-                }
-            }
-        }
-    }
 
     private static void startCount(List<Integer>[][] listTable) {
         for (int i = 0; i < listTable.length; i++) {
