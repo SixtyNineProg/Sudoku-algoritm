@@ -100,7 +100,7 @@ public class MainTest {
             {'2', '9', '1', '7', '6', '4', '5', '3', '8'},
     };
 
-    char[][] anRealTest = {
+    char[][] anReal1Test = {
             {'1', '.', '.', '.', '.', '.', '.', '.', '.'},
             {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
             {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
@@ -112,7 +112,7 @@ public class MainTest {
             {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
     };
 
-    public static final char[][] anRealSolution = {
+    public static final char[][] anReal1Solution = {
             {'1', '2', '3', '4', '5', '6', '7', '8', '9'},
             {'4', '5', '6', '7', '8', '9', '1', '2', '3'},
             {'7', '8', '9', '1', '2', '3', '4', '5', '6'},
@@ -123,6 +123,31 @@ public class MainTest {
             {'5', '4', '2', '8', '9', '7', '6', '3', '1'},
             {'9', '6', '8', '3', '4', '1', '5', '7', '2'},
     };
+
+    char[][] anReal2Test = {
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+    };
+
+    public static final char[][] anReal2Solution = {
+            {'1', '2', '3', '4', '5', '6', '7', '8', '9'},
+            {'4', '5', '6', '7', '8', '9', '1', '2', '3'},
+            {'7', '8', '9', '1', '2', '3', '4', '5', '6'},
+            {'2', '3', '1', '6', '7', '4', '8', '9', '5'},
+            {'8', '7', '5', '9', '1', '2', '3', '6', '4'},
+            {'6', '9', '4', '5', '3', '8', '2', '1', '7'},
+            {'3', '1', '7', '2', '6', '5', '9', '4', '8'},
+            {'5', '4', '2', '8', '9', '7', '6', '3', '1'},
+            {'9', '6', '8', '3', '4', '1', '5', '7', '2'},
+    };
+
 
     private final Sudoku sudoku = new Sudoku();
 
@@ -167,11 +192,22 @@ public class MainTest {
     }
 
     @Test
-    public void whenAnRealDataForMainSetSolutionThenReturnCorrectSolution() {
+    public void whenAnReal1DataForMainSetSolutionThenReturnCorrectSolution() {
         List<Integer>[][] actualList;
-        List<Integer>[][] expectedList = sudoku.convertChar2ArrayToList2Array(anRealSolution);
-        sudoku.setSolution(anRealTest);
+        List<Integer>[][] expectedList = sudoku.convertChar2ArrayToList2Array(anReal1Solution);
+        sudoku.setSolution(anReal1Test);
         actualList = sudoku.getSolution();
+        boolean difference = compare2Lists(actualList, expectedList);
+        Assert.assertFalse(difference);
+    }
+
+    @Test
+    public void whenAnReal2DataForMainSetSolutionThenReturnCorrectSolution() {
+        List<Integer>[][] actualList;
+        List<Integer>[][] expectedList = sudoku.convertChar2ArrayToList2Array(anReal2Solution);
+        sudoku.setSolution(anReal2Test);
+        actualList = sudoku.getSolution();
+        sudoku.printList2MasSolution(actualList);
         boolean difference = compare2Lists(actualList, expectedList);
         Assert.assertFalse(difference);
     }
