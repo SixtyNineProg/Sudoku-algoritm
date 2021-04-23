@@ -7,11 +7,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Codewars-toCamelCase" />
         <module name="Task2 - Sudoku" />
+        <module name="Codewars_digital_root" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="9">
-      <module name="Task2 - Sudoku" target="1.9" />
+      <module name="Codewars-toCamelCase" target="11" />
+      <module name="Codewars_digital_root" target="11" />
+      <module name="Task2 - Sudoku" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
