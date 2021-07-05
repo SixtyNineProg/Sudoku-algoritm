@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Codewars/Codewars.iml" filepath="$PROJECT_DIR$/Codewars/Codewars.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codewars-Are they the same/Codewars-Are they the same.iml" filepath="$PROJECT_DIR$/Codewars-Are they the same/Codewars-Are they the same.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Codewars-Build a pile of Cubes/Codewars-Build a pile of Cubes.iml" filepath="$PROJECT_DIR$/Codewars-Build a pile of Cubes/Codewars-Build a pile of Cubes.iml" />
       <module fileurl="file://$PROJECT_DIR$/Codewars-toCamelCase/Codewars-toCamelCase.iml" filepath="$PROJECT_DIR$/Codewars-toCamelCase/Codewars-toCamelCase.iml" />
       <module fileurl="file://$PROJECT_DIR$/Codewars_digital_root/Codewars_digital_root.iml" filepath="$PROJECT_DIR$/Codewars_digital_root/Codewars_digital_root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RowSumOddNumbers/RowSumOddNumbers.iml" filepath="$PROJECT_DIR$/RowSumOddNumbers/RowSumOddNumbers.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task1 - Container with water/Task1 - Container with water.iml" filepath="$PROJECT_DIR$/Task1 - Container with water/Task1 - Container with water.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task2 - Sudoku/Task2 - Sudoku.iml" filepath="$PROJECT_DIR$/Task2 - Sudoku/Task2 - Sudoku.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task3 - Happy number/Task3 - Happy number.iml" filepath="$PROJECT_DIR$/Task3 - Happy number/Task3 - Happy number.iml" />
