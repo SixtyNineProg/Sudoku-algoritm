@@ -15,6 +15,7 @@
       <module fileurl="file://$PROJECT_DIR$/Task5 - Recursion/Task5 - Recursion.iml" filepath="$PROJECT_DIR$/Task5 - Recursion/Task5 - Recursion.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task6 - CalculateStudents/Task6 - CalculateStudents.iml" filepath="$PROJECT_DIR$/Task6 - CalculateStudents/Task6 - CalculateStudents.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tasks.iml" filepath="$PROJECT_DIR$/Tasks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/isPrime/isPrime.iml" filepath="$PROJECT_DIR$/isPrime/isPrime.iml" />
     </modules>
   </component>
 </project>
