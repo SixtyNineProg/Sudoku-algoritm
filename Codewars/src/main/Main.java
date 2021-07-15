@@ -2,6 +2,7 @@ package main;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(DuplicateEncoder.encode("Supralapsarian"));
+        String str = Solution.toCamelCase(" camel case word");
+        System.out.println(str);
     }
 }
